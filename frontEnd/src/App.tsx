@@ -15,7 +15,7 @@ function App() {
           <Route
             path={"/"}
             element={
-              <RequireAuth withAuth={false}>
+              <RequireAuth withAuth={true}>
                 <Home />
               </RequireAuth>
             }

@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { User } from "./types";
 import api from "./api";
 import { removeLocalStorage } from "./utils";
 
@@ -17,18 +15,10 @@ interface RequireAuthProps {
 
 const RequireAuth = ({ children, withAuth }: RequireAuthProps) => {
   const navigate = useNavigate();
-  const id = Number(localStorage.getItem("groupomania-id"));
-
-  const { data: user } = useQuery<User>({
-    queryKey: ["app", "user"],
-    queryFn: () => api.user.info(id as number),
-    staleTime: Infinity,
-    enabled: !!id,
-  });
 
   useEffect(() => {
-    if (user && !user.isLogged && withAuth) {
-      const token = localStorage.getItem("groupomania-id");
+    if (withAuth) {
+      const token = localStorage.getItem("groupomania-token");
       if (!token) {
         return navigate("/login");
       } else {

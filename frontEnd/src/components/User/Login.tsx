@@ -32,7 +32,7 @@ const Login = () => {
         .then((res) => {
           if (res.status === 200) {
             localStorage.setItem("groupomania-token", res.token);
-            localStorage.setItem("groupomania-id", res.id);
+            localStorage.setItem("groupomania-id", res.data.id);
             toast.success(`Bienvenue ${usernameInputRef.current?.value}`, {
               position: "bottom-right",
               autoClose: 2000,
@@ -50,7 +50,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[100vh]  flex justify-center items-center">
+    <div className="h-[100vh] flex justify-center items-center">
       <ToastContainer />
       <form className="w-2/3 bg-primary-100 shadow-md h-2/3 flex flex-col justify-around p-4 rounded-lg">
         <div>

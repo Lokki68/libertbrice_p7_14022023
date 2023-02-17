@@ -1,5 +1,4 @@
 import React from "react";
-// @ts-ignore
 import { RiGlobalLine } from "react-icons/ri";
 
 const Home = () => {
