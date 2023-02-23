@@ -3,12 +3,16 @@ import HeaderButton from "../../../../../UiComponents/HeaderButton";
 import { IoIosLogOut, IoSettingsSharp } from "react-icons/all";
 import { useNavigate } from "react-router-dom";
 import { removeLocalStorage } from "../../../../../../utils/utils";
+import { useDispatch } from "react-redux";
+import { logoutUserReducer } from "../../../../../../redux/userReducer";
 
 const DesktopNav = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logout = () => {
     removeLocalStorage();
+    dispatch(logoutUserReducer());
     navigate("/login");
   };
 

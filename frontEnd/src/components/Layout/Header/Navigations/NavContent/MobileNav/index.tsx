@@ -8,8 +8,11 @@ import {
 import HeaderButton from "../../../../../UiComponents/HeaderButton";
 import { useNavigate } from "react-router-dom";
 import { removeLocalStorage } from "../../../../../../utils/utils";
+import { logoutUserReducer } from "../../../../../../redux/userReducer";
+import { useDispatch } from "react-redux";
 
 const MobileNav = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -17,6 +20,7 @@ const MobileNav = () => {
 
   const logout = () => {
     removeLocalStorage();
+    dispatch(logoutUserReducer());
     navigate("/login");
   };
 

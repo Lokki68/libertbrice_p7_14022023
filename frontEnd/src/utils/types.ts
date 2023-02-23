@@ -9,3 +9,20 @@ export interface User {
   phoneNumber: number;
   username: string;
 }
+
+export interface Post {
+  id: number;
+  message: string;
+  image: string;
+  date: string;
+  userId: number;
+  comments: any[];
+  likes: any[];
+}
+
+export interface RootState {
+  user: {
+    isLogged: boolean;
+    infos: User;
+  };
+}

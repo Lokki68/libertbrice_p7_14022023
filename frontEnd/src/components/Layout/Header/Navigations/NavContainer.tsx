@@ -1,20 +1,21 @@
 import React from "react";
 import { User } from "../../../../utils/types";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineUnlock } from "react-icons/ai";
 import DesktopNav from "./NavContent/DesktopNav";
 import MobileNav from "./NavContent/MobileNav";
 
 const NavContainer = ({ info }: { info: User }) => {
+  const navigate = useNavigate();
   const displayUsernameorAdmin = info.admin ? (
-    <Link
-      to={"/admin"}
-      className="btn w-6 h-6 mx-1 p-0 items-center justify-center"
+    <p
+      onClick={() => navigate("/admin")}
+      className="text-xl text-gray-50 mr-2 cursor-pointer"
     >
       <AiOutlineUnlock />
-    </Link>
+    </p>
   ) : (
-    <p className="text-xl tex-gray-50 mr-2">{info.username}</p>
+    <p className="text-xl text-gray-50 mr-2">{info.username}</p>
   );
 
   return (
