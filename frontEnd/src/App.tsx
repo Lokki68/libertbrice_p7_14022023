@@ -7,6 +7,8 @@ import RequireAuth from "./utils/RequireAuth";
 import Login from "./components/User/Login";
 import Register from "./components/User/Register";
 import Annuaire from "./components/Annuaire";
+import Profil from "./components/Profil";
+import PostForm from "./components/Posts/PostForm";
 
 function App() {
   return (
@@ -22,10 +24,26 @@ function App() {
             }
           />
           <Route
+            path="/post/newpost"
+            element={
+              <RequireAuth withAuth={true}>
+                <PostForm />
+              </RequireAuth>
+            }
+          />
+          <Route
             path={"/annuaire"}
             element={
               <RequireAuth withAuth={true}>
                 <Annuaire />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profil"
+            element={
+              <RequireAuth withAuth={true}>
+                <Profil />
               </RequireAuth>
             }
           />

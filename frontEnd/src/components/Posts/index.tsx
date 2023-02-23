@@ -11,9 +11,6 @@ const Posts = ({ posts }: { posts: Post[] }) => {
     staleTime: Infinity,
   });
 
-  console.log("posts ->", posts);
-  console.log("users ->", users);
-
   return (
     <div className="h-[100vh] w-full flex flex-col pt-24 justify-start items-center ">
       <TitleBar>Posts</TitleBar>
