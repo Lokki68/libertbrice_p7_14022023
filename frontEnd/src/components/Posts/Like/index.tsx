@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Like } from "../../../utils/types";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/all";
+import { useMutation, useQueryClient } from "react-query";
+import api from "../../../utils/api";
 
 interface LikeProps {
   postId: number;
@@ -9,8 +11,20 @@ interface LikeProps {
 }
 
 const LikeComponent = ({ postId, likes, userId }: LikeProps) => {
+  const queryClient = useQueryClient();
+
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [userLikedId, setUserLikedId] = useState<number>();
+
+  const likePost = useMutation({
+    mutationFn: () => api.posts.like({ postId, userId }),
+    onSuccess: () => queryClient.invalidateQueries(["app", "posts"]),
+  });
+
+  const unLikePost = useMutation({
+    mutationFn: (id: number) => api.posts.unlike(id),
+    onSuccess: () => queryClient.invalidateQueries(["app", "posts"]),
+  });
 
   useEffect(() => {
     const result = likes.filter((like) => like.userId === userId);
@@ -20,7 +34,10 @@ const LikeComponent = ({ postId, likes, userId }: LikeProps) => {
       setIsLiked(true);
     }
   }, [likes]);
-  const handleLike = () => {};
+  const handleLike = () => {
+    userLikedId ? unLikePost.mutate(userLikedId) : likePost.mutate();
+  };
+
   return (
     <>
       <button className="h-8 aspect-square" onClick={handleLike}>
