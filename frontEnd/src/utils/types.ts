@@ -1,3 +1,18 @@
+export interface Like {
+  id: number;
+  postId: number;
+  userId: number;
+  date: string;
+}
+
+export interface Comment {
+  id: number;
+  content: string;
+  postId: number;
+  userId: number;
+  date: string;
+}
+
 export interface User {
   admin: boolean;
   date: string;
@@ -16,8 +31,8 @@ export interface Post {
   image: string;
   date: string;
   userId: number;
-  comments: any[];
-  likes: any[];
+  comments: Comment[];
+  likes: Like[];
 }
 
 export interface RootState {

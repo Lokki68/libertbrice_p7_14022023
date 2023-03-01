@@ -9,6 +9,7 @@ import Register from "./components/User/Register";
 import Annuaire from "./components/Annuaire";
 import Profil from "./components/Profil";
 import PostForm from "./components/Posts/PostForm";
+import PostDetail from "./components/Posts/PostDetail";
 
 function App() {
   return (
@@ -24,10 +25,26 @@ function App() {
             }
           />
           <Route
+            path="/post/:id"
+            element={
+              <RequireAuth withAuth={true}>
+                <PostDetail />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/post/newpost"
             element={
               <RequireAuth withAuth={true}>
-                <PostForm />
+                <PostForm edit={false} />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/post/:id/editpost"
+            element={
+              <RequireAuth withAuth={true}>
+                <PostForm edit={true} />
               </RequireAuth>
             }
           />

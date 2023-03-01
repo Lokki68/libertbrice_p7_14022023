@@ -1,5 +1,6 @@
 import axios from "axios";
 import { environnement } from "./environnement";
+import { Post, User } from "./types";
 
 const api = {
   admin: {
@@ -39,13 +40,13 @@ const api = {
   user: {
     showAll: () => {
       return axios
-        .get(`${environnement.apiUrl}/user`)
+        .get<User[]>(`${environnement.apiUrl}/user`)
         .then((res) => res.data)
         .catch((err) => console.log({ err: err.message }));
     },
     save: (data: { username: string; email: string; password: string }) => {
       return axios
-        .post(`${environnement.apiUrl}/auth/signup`, data)
+        .post<User>(`${environnement.apiUrl}/auth/signup`, data)
         .then((res) => res.data)
         .catch((err) => console.log({ err: err.message }));
     },
@@ -77,28 +78,38 @@ const api = {
   posts: {
     showAll: () => {
       return axios
-        .get(`${environnement.apiUrl}/post`)
+        .get<Post[]>(`${environnement.apiUrl}/post`)
         .then((res) => res.data)
         .catch((err) => console.log({ err: err.message }));
     },
     showOne: (id: number) => {
       return axios
-        .get(`${environnement.apiUrl}/post/${id}`)
+        .get<Post>(`${environnement.apiUrl}/post/${id}`)
         .then((res) => res.data)
         .catch((err) => console.log({ err: err.message }));
     },
-    create: (data: { userId: number; message: string; image: string }) => {
+    create: (data: { userId: number; message: string; image?: File }) => {
+      const formData = new FormData();
+      formData.append("userId", data.userId.toString());
+      formData.append("message", data.message);
+      formData.append("image", data.image !== undefined ? data.image : "");
+
       return axios
-        .post(`${environnement.apiUrl}/post`, data)
+        .post(`${environnement.apiUrl}/post`, formData)
         .then((res) => res.data)
         .catch((err) => console.log({ err: err.message }));
     },
     update: (
       id: number,
-      data: { userId: number; message: string; image: string }
+      data: { userId: number; message: string; image?: File }
     ) => {
+      const formData = new FormData();
+      formData.append("userId", data.userId.toString());
+      formData.append("message", data.message);
+      formData.append("image", data.image !== undefined ? data.image : "");
+
       return axios
-        .put(`${environnement.apiUrl}/post/${id}`, data)
+        .put(`${environnement.apiUrl}/post/${id}`, formData)
         .then((res) => res.data)
         .catch((err) => console.log({ err: err.message }));
     },
