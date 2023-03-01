@@ -20,9 +20,9 @@ const Posts = ({ posts }: { posts: Post[] }) => {
         </Link>
       </div>
       <div className="flex flex-wrap justify-center overflow-x-scroll w-full">
-        {posts && users?.data ? (
+        {posts && users ? (
           posts.map((post) => (
-            <PostCard key={post.id} post={post} users={users.data} />
+            <PostCard key={post.id} post={post} users={users} />
           ))
         ) : (
           <p>Pas de post pour le moment ...</p>

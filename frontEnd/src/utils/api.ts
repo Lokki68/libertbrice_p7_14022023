@@ -2,6 +2,10 @@ import axios from "axios";
 import { environnement } from "./environnement";
 import { Post, User } from "./types";
 
+interface userData {
+  data: User[];
+}
+
 const api = {
   admin: {
     delete: (id: number) => {
@@ -40,8 +44,11 @@ const api = {
   user: {
     showAll: () => {
       return axios
-        .get<User[]>(`${environnement.apiUrl}/user`)
-        .then((res) => res.data)
+        .get<userData>(`${environnement.apiUrl}/user`)
+        .then((res) => {
+          const { data } = res.data;
+          return data;
+        })
         .catch((err) => console.log({ err: err.message }));
     },
     save: (data: { username: string; email: string; password: string }) => {

@@ -17,8 +17,6 @@ const PostCard = ({ post, users }: { post: Post; users: User[] }) => {
     />
   );
 
-  console.log(date);
-
   return (
     <div className="flex flex-col w-[90%] h-min-80 relative bg-primary-100 my-5 mx-auto rounded-xl">
       <div className="flex items-center justify-between my-2 mx-4">
