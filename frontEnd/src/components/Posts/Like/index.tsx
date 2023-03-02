@@ -18,12 +18,18 @@ const LikeComponent = ({ postId, likes, userId }: LikeProps) => {
 
   const likePost = useMutation({
     mutationFn: () => api.posts.like({ postId, userId }),
-    onSuccess: () => queryClient.invalidateQueries(["app", "posts"]),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["app", "posts"]),
+        queryClient.invalidateQueries(["app", "post", postId]);
+    },
   });
 
   const unLikePost = useMutation({
     mutationFn: (id: number) => api.posts.unlike(id),
-    onSuccess: () => queryClient.invalidateQueries(["app", "posts"]),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["app", "posts"]),
+        queryClient.invalidateQueries(["app", "post", postId]);
+    },
   });
 
   useEffect(() => {
@@ -35,7 +41,13 @@ const LikeComponent = ({ postId, likes, userId }: LikeProps) => {
     }
   }, [likes]);
   const handleLike = () => {
-    userLikedId ? unLikePost.mutate(userLikedId) : likePost.mutate();
+    if (userLikedId) {
+      unLikePost.mutate(userLikedId);
+      setIsLiked(!isLiked);
+      setUserLikedId(0);
+    } else {
+      likePost.mutate();
+    }
   };
 
   return (
